@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ✅ Root route (for Render homepage)
+app.get("/", (req, res) => {
+  res.send("✅ Gatiseva Product API is Live and Working!");
+});
+
 // ✅ Fetch all products
 app.get("/api/products", (req, res) => {
   res.json(products);
@@ -20,11 +25,14 @@ app.get("/api/products/:category", (req, res) => {
   );
 
   if (filtered.length === 0) {
-    return res.status(404).json({ message: "No products found for this category" });
+    return res
+      .status(404)
+      .json({ message: "No products found for this category" });
   }
 
   res.json(filtered);
 });
 
-const PORT = 5000;
+// ✅ Use Render’s port if available
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
